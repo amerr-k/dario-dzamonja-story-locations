@@ -1,31 +1,16 @@
 import React, { useEffect } from "react";
-import "./App.css";
-import {
-  MapContainer,
-  Marker,
-  Polygon,
-  Popup,
-  TileLayer,
-  useMap,
-} from "react-leaflet";
-// import "leaflet/dist/leaflet.css";
-import { Component } from "react";
-import L, { LatLngExpression } from "leaflet";
-import GenericMarker from "./components/GenericMarker";
-import databaseService from "./components/DatabaseService";
-import Button from "react-bootstrap/Button";
-import Story from "./components/Story";
-import GenericMarkers from "./components/GenericMarkers";
+import "../App.css";
+import { MapContainer, TileLayer } from "react-leaflet";
+import { LatLngExpression } from "leaflet";
+import databaseService from "../components/DatabaseService";
+import Story from "../components/Story";
+import GenericMarkers from "../components/LocationMarkers";
 import { Spinner } from "react-bootstrap";
-const sarajevo: LatLngExpression = [43.85643, 18.413029];
-const ulicaJezero: LatLngExpression = [43.86006275854989, 18.412784126061856];
-const skenderijaMost: LatLngExpression = [43.85592739279412, 18.4132047800942];
-const marijinDvor: LatLngExpression = [43.85585448122983, 18.40711979077634];
-const kosevskoBrdo: LatLngExpression = [43.87000840087395, 18.405366333666393];
-const katedrala: LatLngExpression = [43.859416563235264, 18.425419091662633];
-const vilsonovoSetaliste: LatLngExpression = [
-  43.85303379999868, 18.39292119999612,
-];
+
+const locLatitude = 43.85643;
+const locLongitude = 18.413029;
+
+const sarajevoLocation: LatLngExpression = [locLatitude, locLongitude];
 
 const getQuotesByLocation = async (locationId: string): Promise<any[]> => {
   return await databaseService.getQuotesByLocation(locationId);
@@ -39,19 +24,25 @@ const getStoryById = async (storyId: string): Promise<any> => {
   return await databaseService.getStoryById(storyId);
 };
 
+const createQuote = async (): Promise<any> => {
+  return await databaseService.createQuote();
+};
 const HomePage = () => {
   const [modalShow, setModalShow] = React.useState(false);
   const [locations, setLocations] = React.useState<any[]>([] as any[]);
   const [story, setStory] = React.useState<string>("");
+  const [locationSpinner, setLocationSpinner] = React.useState<boolean>(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const locations = await getAllLocations();
         setLocations(locations);
-      } catch (error) {
+        setLocationSpinner(false);
+      } catch (error: any) {
         console.error(error);
         setLocations([]);
+        setLocationSpinner(false);
       }
     };
 
@@ -65,8 +56,6 @@ const HomePage = () => {
   const getStory = async (storyId: string) => {
     try {
       const story = await getStoryById(storyId);
-      console.log("story");
-      console.log(story);
       setStory(story);
       showStoryModal(true);
     } catch (error) {
@@ -75,10 +64,11 @@ const HomePage = () => {
     }
   };
 
-  return locations.length !== 0 ? (
+  return !locationSpinner ? (
     <div className="wrapper home-body">
+      <button onClick={() => createQuote()}>klikni me</button>
       <MapContainer
-        center={sarajevo}
+        center={sarajevoLocation}
         zoom={13}
         scrollWheelZoom={false}
         style={{ border: "5px solid	#87CEEB" }}
@@ -102,7 +92,7 @@ const HomePage = () => {
     </div>
   ) : (
     <div className="wrapper">
-      <Spinner animation="border" role="status" variant="info">
+      <Spinner animation="border" role="status" variant="dark">
         <span className="visually-hidden"></span>
       </Spinner>
     </div>

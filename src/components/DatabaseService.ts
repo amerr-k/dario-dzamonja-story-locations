@@ -11,29 +11,39 @@ import {
   doc,
   DocumentSnapshot,
   getDoc,
+  addDoc,
 } from "firebase/firestore";
+import database from "./Firebase";
 import db from "./Firebase";
 
 const quotes_collection = "quotes";
 const locations_collection = "locations";
 const stories_collection = "stories";
-
+const quote = {
+  content:
+    "Više puta je mijenjala ime. Ja pamtim samo dva. Jezero i sadašnje - Kate Govorušić.",
+};
 export class DatabaseService {
+  createQuote = async (): Promise<void> => {
+    console.log(database);
+
+    console.log("asdasd");
+    const quotesCollection = collection(db, "quotes");
+    const docRef = await addDoc(quotesCollection, quote);
+    console.log(`Quote written with ID: ${docRef.id}`);
+  };
+
   getAllLocations = async (): Promise<Array<Record<string, any>>> => {
-    console.log("1");
     const locationsReference: CollectionReference = collection(
       db,
       locations_collection
     );
-    console.log("2");
 
     const locationsQuery: Query<DocumentData> = query(locationsReference);
-    console.log("3");
 
     const locationsSnapshot: QuerySnapshot<DocumentData> = await getDocs(
       locationsQuery
     );
-    console.log("4");
 
     const locations: Array<Record<string, any>> = locationsSnapshot.docs.map(
       (doc) => ({
@@ -41,7 +51,6 @@ export class DatabaseService {
         ...doc.data(),
       })
     );
-    console.log("5");
 
     return locations;
   };

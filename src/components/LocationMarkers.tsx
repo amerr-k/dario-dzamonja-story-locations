@@ -1,5 +1,5 @@
 import React from "react";
-import GenericMarker from "./GenericMarker";
+import GenericMarker from "./LocationMarker";
 
 interface IProps {
   locations: any[];
@@ -7,7 +7,7 @@ interface IProps {
   getStory(storyId: string): void;
 }
 
-function GenericMarkers(props: IProps) {
+function LocationMarkers(props: IProps) {
   const { getQuotesByLocation, getStory, locations } = props;
 
   return (
@@ -24,4 +24,4 @@ function GenericMarkers(props: IProps) {
   );
 }
 
-export default GenericMarkers;
+export default LocationMarkers;

@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+
 .App {
   font-family: sans-serif;
   text-align: center;
@@ -6,7 +8,7 @@
 html,
 body {
   height: 100%;
-  background-image: url("../../713479.png");
+  background-image: url("./images/sarajevo-landscape.png");
 }
 
 #root {
@@ -49,4 +51,35 @@ body {
   padding: 2em;
   color: white;
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* alert fade out */
+
+/* .alert {
+  opacity: 1;
+  transition: opacity 500ms;
+}
+
+.alert-enter {
+  opacity: 0;
+}
+
+.alert-enter-active {
+  opacity: 1;
+}
+
+.alert-exit {
+  opacity: 1;
+}
+
+.alert-exit-active {
+  opacity: 0;
+} */
+
+.navbar {
+  font-family: "Roboto", sans-serif;
+  /* border: 1px solid red; */
+  background-color: white;
+  padding-bottom: 2px !important;
+  padding-top: 2px !important;
 }
