@@ -37,7 +37,7 @@ const HomePage = () => {
     };
 
     fetchData();
-  }, []);
+  }, [t]);
 
   const getStory = async (storyId: string) => {
     try {
@@ -69,7 +69,7 @@ const HomePage = () => {
   };
   return !locationSpinner ? (
     <div style={{ height: "100%" }}>
-      {alert != undefined ? (
+      {alert !== undefined ? (
         <div className="custom-alert fade-out">
           <Alert
             className="mb-0"

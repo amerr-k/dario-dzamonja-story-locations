@@ -8,39 +8,35 @@ const About: React.FC = () => {
       <Row>
         <Col>
           <p className="paragraph">
-            Ideja Mape Sarajeva povezane sa pričama Darija Džamonje nastala je
-            mojim čestim lutanjima po Sarajevu i čitanjem Darijevih priča.
-            Koliko god puta da je Dario spomenuo "Istru" ili neki drugu lokaciju
-            (najčešće je to bila neka kafana), ja sam se pitao gdje li je to
-            tačno bilo u Sarajevu. Kao posljedica tih pitanja, nastala je ova
-            jednostavna aplikacija kao neka vrsta omaža Dariju a ostavljena
-            ljudima koji vole njegove priče.
+            Ideja iza ove jednostavne aplikacije je nastala na osnovu mojih
+            kud-i-kamo lutanja po ulicama glavnog bh grada a u kojima sam često
+            sebe znao pitati: "A šta krije ova ulica još?" ili "A đe je Boga ti
+            ona kafana Istra da sad odem i da se...". Kao posljedica toga i kao
+            omaž na sve što Dario znači ovom gradu i njegovim čitateljima, na
+            ovoj adresi možete pronaći mapu Sarajeva sa obilježenim lokacijama
+            iz njegovih priča. Ova aplikacija korisniku omogućuje da klikom na
+            određenu lokaciju dobije sve odlomke iz priča gdje se ta lokacija
+            spominjala a klikom na odlomak, dobija priliku da pročita cijelu
+            priču. Želim da se zahvalim Darijevim kćerkama: Neveni i Vesni
+            kojima se ideja svidjela i koje su mi dopustile korištenje njegovih
+            priča i Darijevoj sestri Mirni koja je bila posrednik i upoznala me
+            sa nositeljicama prava na priče.
           </p>
           <p className="paragraph">
-            <div> Disklejmeri:</div>
-            <br></br>
             <ul>
               <li>
-                1. Ukoliko osoba koja polaže pravo na ovu fotografiju ne želi
-                fotografiju na stranici, voljan sam je ukloniti po zahtjevu.
-                Ukoliko je uredu da ova slika bude na naslovnici, ako želi neka
-                se javi da je dodam kao kontributora.
+                Molio bih fotografa ove slike da me kontaktira u vezi dozvole za
+                njenu upotrebu na ovoj stranici.
               </li>
               <li>
-                2. Postoji još mnogo lokacija koje nisam uspio unijeti u mapu.
-                Većinom su to mjesta kojih više nema ali ukoliko neko poznaje
-                nekoga ko je živio u vrijeme Darijevog pisanja i poznaje
-                Sarajevo iz tog vremena, bilo bi mi drago ukoliko bi bio spreman
-                da pomogne.
-              </li>
-              <li>
-                3. Copyrights © nasljednice Darija Džamonje. Ukoliko osobe koje
-                polažu prava na priče Darija Džamonje ne žele da ova stranica
-                bude dostupna, voljan sam je ukloniti po zahtjevu.
+                Aplikacija će vremenom biti ažurirana sa novim lokacijama.
               </li>
             </ul>
           </p>
-          <p className="paragraph"> Kontakt: amer.kovac.pmf@gmail.com</p>
+          <p className="paragraph">
+            Za sve prijedloge i kritike, kontaktirajte me na:
+            amer.kovac.pmf@gmail.com
+          </p>
         </Col>
       </Row>
     </Container>
