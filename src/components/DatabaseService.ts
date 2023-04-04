@@ -11,29 +11,18 @@ import {
   doc,
   DocumentSnapshot,
   getDoc,
-  addDoc,
 } from "firebase/firestore";
-import database from "./Firebase";
+import Location, { ILocation } from "../models/Location";
+import Quote, { IQuote } from "../models/Quote";
+import Story from "../models/Story";
 import db from "./Firebase";
 
 const quotes_collection = "quotes";
 const locations_collection = "locations";
 const stories_collection = "stories";
-const quote = {
-  content:
-    "Više puta je mijenjala ime. Ja pamtim samo dva. Jezero i sadašnje - Kate Govorušić.",
-};
+
 export class DatabaseService {
-  createQuote = async (): Promise<void> => {
-    console.log(database);
-
-    console.log("asdasd");
-    const quotesCollection = collection(db, "quotes");
-    const docRef = await addDoc(quotesCollection, quote);
-    console.log(`Quote written with ID: ${docRef.id}`);
-  };
-
-  getAllLocations = async (): Promise<Array<Record<string, any>>> => {
+  getAllLocations = async (): Promise<Location[]> => {
     const locationsReference: CollectionReference = collection(
       db,
       locations_collection
@@ -45,18 +34,21 @@ export class DatabaseService {
       locationsQuery
     );
 
-    const locations: Array<Record<string, any>> = locationsSnapshot.docs.map(
-      (doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      })
+    const locations: ILocation[] = locationsSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      latitude: doc.data().latitude,
+      longitude: doc.data().longitude,
+      name: doc.data().name,
+      type: doc.data().type,
+    }));
+
+    const mappedLocations = locations.map(
+      (locationData: ILocation) => new Location(locationData)
     );
 
-    return locations;
+    return mappedLocations;
   };
-  getQuotesByLocation = async (
-    locationId: string
-  ): Promise<Array<Record<string, any>>> => {
+  getQuotesByLocation = async (locationId: string): Promise<Quote[]> => {
     const collectionReference: CollectionReference = collection(
       db,
       quotes_collection
@@ -69,20 +61,32 @@ export class DatabaseService {
     const quotesSnapshot: QuerySnapshot<DocumentData> = await getDocs(
       quotesQuery
     );
-    const quotes: Array<Record<string, any>> = quotesSnapshot.docs.map(
-      (doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      })
+    const quotes: IQuote[] = quotesSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      content: doc.data().content,
+      storyId: doc.data().storyId,
+      locations: doc.data().locations,
+    }));
+
+    const mappedQuotes = quotes.map(
+      (quoteData: IQuote) => new Quote(quoteData)
     );
-    return quotes;
+
+    return mappedQuotes;
   };
-  getStoryById = async (storyId: string): Promise<Record<string, any>> => {
+  getStoryById = async (storyId: string): Promise<Story> => {
     const storyRef: DocumentReference = doc(db, stories_collection, storyId);
     const storySnapshot: DocumentSnapshot<DocumentData> = await getDoc(
       storyRef
     );
-    return storySnapshot.data() as Record<string, any>;
+
+    const story = new Story({
+      id: storyId,
+      content: storySnapshot.data()?.content,
+      name: storySnapshot.data()?.name,
+    });
+
+    return story;
   };
 }
 

@@ -1,97 +1,98 @@
 import React, { useEffect } from "react";
 import "../App.css";
-import { MapContainer, TileLayer } from "react-leaflet";
-import { LatLngExpression } from "leaflet";
 import databaseService from "../components/DatabaseService";
-import Story from "../components/Story";
-import GenericMarkers from "../components/LocationMarkers";
-import { Spinner } from "react-bootstrap";
+import { Alert, Spinner } from "react-bootstrap";
+import SarajevoMap from "../components/SarajevoMap";
+import Location from "../models/Location";
+import Story from "../models/Story";
+import Quote from "../models/Quote";
+import { useTranslation } from "react-i18next";
 
-const locLatitude = 43.85643;
-const locLongitude = 18.413029;
-
-const sarajevoLocation: LatLngExpression = [locLatitude, locLongitude];
-
-const getQuotesByLocation = async (locationId: string): Promise<any[]> => {
+const getQuotesByLocation = async (locationId: string): Promise<Quote[]> => {
   return await databaseService.getQuotesByLocation(locationId);
 };
 
-const getAllLocations = async (): Promise<any[]> => {
-  return await databaseService.getAllLocations();
-};
-
-const getStoryById = async (storyId: string): Promise<any> => {
-  return await databaseService.getStoryById(storyId);
-};
-
-const createQuote = async (): Promise<any> => {
-  return await databaseService.createQuote();
-};
 const HomePage = () => {
-  const [modalShow, setModalShow] = React.useState(false);
-  const [locations, setLocations] = React.useState<any[]>([] as any[]);
-  const [story, setStory] = React.useState<string>("");
+  const [storyModalShow, setStoryModalShow] = React.useState(false);
+  const [locations, setLocations] = React.useState<Location[]>(
+    [] as Location[]
+  );
   const [locationSpinner, setLocationSpinner] = React.useState<boolean>(true);
+  const [story, setStory] = React.useState<Story>({} as Story);
+  const [alert, setAlert] = React.useState<string | undefined>(undefined);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const locations = await getAllLocations();
+        const locations = await databaseService.getAllLocations();
         setLocations(locations);
         setLocationSpinner(false);
       } catch (error: any) {
         console.error(error);
         setLocations([]);
         setLocationSpinner(false);
+        setAlertMessage(t("error.location_err_msg"));
       }
     };
 
     fetchData();
   }, []);
 
-  const showStoryModal = (show: boolean) => {
-    setModalShow(show);
-  };
-
   const getStory = async (storyId: string) => {
     try {
-      const story = await getStoryById(storyId);
+      const story = await databaseService.getStoryById(storyId);
       setStory(story);
       showStoryModal(true);
     } catch (error) {
       console.error(error);
-      setStory("");
+      setStory({} as Story);
+      setAlertMessage(t("error.story_err_msg"));
     }
   };
 
-  return !locationSpinner ? (
-    <div className="wrapper home-body">
-      <button onClick={() => createQuote()}>klikni me</button>
-      <MapContainer
-        center={sarajevoLocation}
-        zoom={13}
-        scrollWheelZoom={false}
-        style={{ border: "5px solid	#87CEEB" }}
-      >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
+  const showStoryModal = (show: boolean) => {
+    setStoryModalShow(show);
+  };
 
-        <GenericMarkers
-          locations={locations}
-          getQuotesByLocation={getQuotesByLocation}
-          getStory={getStory}
-        ></GenericMarkers>
-      </MapContainer>
-      <Story
-        show={modalShow}
-        onHide={() => showStoryModal(false)}
+  const setAlertMessage = (message: string): void => {
+    setAlert(message);
+    setTimeout(() => {
+      const fadeOutEl = document.querySelector(".fade-out");
+      if (fadeOutEl) {
+        fadeOutEl.classList.add("fade-out-done");
+        setTimeout(() => {
+          setAlert(undefined);
+        }, 1000);
+      }
+    }, 2000);
+  };
+  return !locationSpinner ? (
+    <div style={{ height: "100%" }}>
+      {alert != undefined ? (
+        <div className="custom-alert fade-out">
+          <Alert
+            className="mb-0"
+            dismissible={true}
+            variant={"dark"}
+            onClose={() => setAlert(undefined)}
+          >
+            <Alert.Heading>{t("error.err_title")}</Alert.Heading>
+            <p className="mb-0">{alert}</p>
+          </Alert>
+        </div>
+      ) : null}
+      <SarajevoMap
+        locations={locations}
         story={story}
+        getStory={getStory}
+        getQuotesByLocation={getQuotesByLocation}
+        storyModalShow={storyModalShow}
+        showStoryModal={showStoryModal}
       />
     </div>
   ) : (
-    <div className="wrapper">
+    <div className="map-wrapper">
       <Spinner animation="border" role="status" variant="dark">
         <span className="visually-hidden"></span>
       </Spinner>

@@ -1,12 +1,12 @@
-import { Link } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
-import { Nav, NavDropdown } from "react-bootstrap";
+import { Nav } from "react-bootstrap";
 import "../App.css";
+import { useTranslation } from "react-i18next";
 
 function AppNavbar() {
+  const { t } = useTranslation();
   return (
-    // <Navbar bg="dark" variant="dark" expand="lg">
     <Navbar expand="lg">
       <Container>
         <Navbar.Brand href="/" style={{ padding: "0px" }}>
@@ -21,12 +21,12 @@ function AppNavbar() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/" style={{ color: "black", fontWeight: 600 }}>
-              Početna
+              {t("menu.home")}
             </Nav.Link>
             <Nav.Link href="about" style={{ color: "black", fontWeight: 600 }}>
-              O Projektu
+              {t("menu.about")}
             </Nav.Link>
-            {/* <Nav.Link href="contact">Kontakt</Nav.Link> */}
+            {/* <Nav.Link href="contact">{t("contact_us")}</Nav.Link> */}
           </Nav>
         </Navbar.Collapse>
       </Container>

@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import { LatLngExpression, LeafletMouseEvent } from "leaflet";
+import { LatLngExpression } from "leaflet";
 import { Marker, Popup } from "react-leaflet";
 import Button from "react-bootstrap/Button";
 import { Spinner } from "react-bootstrap";
+import L from "leaflet";
+import { getIconUrl } from "../utils/MarkerUtils";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   location: any;
@@ -17,6 +20,13 @@ function LocationMarker(props: IProps) {
   const [openLocationId, setOpenLocationId] = useState<String | undefined>(
     undefined
   );
+  const { t } = useTranslation();
+
+  const pointerIcon = new L.Icon({
+    iconUrl: getIconUrl(location),
+    iconSize: [26, 35],
+    iconAnchor: [13, 35],
+  });
 
   const qetQuotes = async (locationId: string) => {
     setQuotesSpinner(true);
@@ -27,6 +37,7 @@ function LocationMarker(props: IProps) {
 
   return (
     <Marker
+      icon={pointerIcon}
       position={[location.latitude, location.longitude] as LatLngExpression}
       eventHandlers={{
         popupopen: async (e: any) => {
@@ -48,7 +59,7 @@ function LocationMarker(props: IProps) {
                     size="sm"
                     onClick={() => getStory(quote.storyId)}
                   >
-                    Pročitajte cijelu priču...
+                    {t("story.read_whole_story")}
                   </Button>
                 </li>
               ))}

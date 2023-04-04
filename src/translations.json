@@ -1,0 +1,24 @@
+{
+  "menu": {
+    "home": "Početna",
+    "about": "O Prjektu"
+  },
+  "legend": {
+    "cinemas": "Kina",
+    "streets": "Ulice",
+    "city_parts": "Dijelovi grada",
+    "coffee_and_other": "Kafane i ostala okupljališta",
+    "other": "Ostalo"
+  },
+  "error": {
+    "err_title": "Ups...",
+    "location_err_msg": "Greška prilikom dohvatanja lokacija. Molimo pokušate kasnije ili kontaktirajte administratora.",
+    "story_err_msg": "Greška prilikom dohvatanja priče. Molimo pokušate kasnije ili kontaktirajte administratora."
+  },
+  "story": {
+    "read_whole_story": "Pročitajte cijelu priču..."
+  },
+  "modal": {
+    "close": "Zatvori"
+  }
+}

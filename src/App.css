@@ -15,13 +15,17 @@ body {
   height: 100%;
 }
 
-.wrapper {
+.map-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   /* margin-top: 3em; */
   height: 100%;
   /* overflow: hidden; */
+}
+
+.home-wrapper {
+  height: 100%;
 }
 
 .leaflet-container {
@@ -53,33 +57,48 @@ body {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-/* alert fade out */
-
-/* .alert {
-  opacity: 1;
-  transition: opacity 500ms;
-}
-
-.alert-enter {
-  opacity: 0;
-}
-
-.alert-enter-active {
-  opacity: 1;
-}
-
-.alert-exit {
-  opacity: 1;
-}
-
-.alert-exit-active {
-  opacity: 0;
-} */
-
 .navbar {
   font-family: "Roboto", sans-serif;
-  /* border: 1px solid red; */
   background-color: white;
   padding-bottom: 2px !important;
   padding-top: 2px !important;
+}
+
+.custom-alert {
+  width: 40%;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+}
+
+@media (max-width: 768px) {
+  .custom-alert {
+    width: 90%;
+    top: 0px;
+    right: 0px;
+    position: relative;
+    margin: 1em auto;
+  }
+  .map-wrapper {
+    align-items: initial;
+  }
+}
+
+.fade-out {
+  opacity: 1;
+  transition: opacity 0.5s ease-out 0.5s;
+}
+
+.fade-out.fade-out-done {
+  opacity: 0;
+}
+
+.tabbed-paragraph {
+  text-indent: 1.5em;
+  /* background-color: red; */
+  text-align: justify;
+  /* border: 1px solid red; */
+  margin: 0;
+  padding: 0em;
 }
