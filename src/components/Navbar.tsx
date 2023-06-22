@@ -20,12 +20,12 @@ function AppNavbar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/" style={{ color: "black", fontWeight: 600 }}>
+            {/* <Nav.Link href="/" style={{ color: "black", fontWeight: 600 }}>
               {t("menu.home")}
-            </Nav.Link>
-            <Nav.Link href="about" style={{ color: "black", fontWeight: 600 }}>
+            </Nav.Link> */}
+            {/* <Nav.Link href="about" style={{ color: "black", fontWeight: 600 }}>
               {t("menu.about")}
-            </Nav.Link>
+            </Nav.Link> */}
             {/* <Nav.Link href="contact">{t("contact_us")}</Nav.Link> */}
           </Nav>
         </Navbar.Collapse>
